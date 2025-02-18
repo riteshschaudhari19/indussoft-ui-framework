@@ -1,0 +1,32 @@
+{
+  "name": "root",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "packages/component-lib/*"
+  ],
+  "devDependencies": {
+    "lerna": "^8.1.9",
+    "typescript": "^5.7.3"
+  },
+  "description": "config driven ui framework",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/riteshschaudhari19/indussoft-ui-framework.git"
+  },
+  "keywords": [
+    "ui",
+    "framework"
+  ],
+  "author": "Ritesh Chaudhari <riteshschaudhari19@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/riteshschaudhari19/indussoft-ui-framework/issues"
+  },
+  "homepage": "https://github.com/riteshschaudhari19/indussoft-ui-framework#readme"
+}
