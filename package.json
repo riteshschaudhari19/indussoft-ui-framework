@@ -3,17 +3,30 @@
   "private": true,
   "workspaces": [
     "packages/*",
-    "packages/component-lib/*"
+    "packages/component-lib/*",
+    "packages/products/loan-origination-system/*",
+    ".build/*"
   ],
   "devDependencies": {
+    "@types/figlet": "^1.7.0",
+    "@types/gradient-string": "^1.1.6",
+    "@types/prompts": "^2.4.9",
+    "execa": "^4.0.0",
+    "figlet": "^1.6.0",
+    "glob": "^10.2.2",
+    "gradient-string": "^2.0.2",
     "lerna": "^8.1.9",
+    "ora": "^4.0.3",
+    "prompts": "^2.4.2",
+    "ts-node": "^10.9.1",
     "typescript": "^5.7.3"
   },
   "description": "config driven ui framework",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "test"
+    "test": "test",
+    "start": "cls && ts-node scripts/cli/index.ts"
   },
   "repository": {
     "type": "git",
