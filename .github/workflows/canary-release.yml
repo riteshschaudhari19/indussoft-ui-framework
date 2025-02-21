@@ -1,0 +1,4 @@
+name: Canary
+on:
+  issue_comment:
+    types: [created]
