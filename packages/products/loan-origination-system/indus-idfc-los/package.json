@@ -8,13 +8,15 @@
   "author": "Ritesh Chaudhari <riteshschaudhari19@gmail.com>",
   "homepage": "https://github.com/riteshschaudhari19/indussoft-ui-framework/tree/main/packages/products/loan-origination-system/indus-idfc-los#readme",
   "license": "ISC",
-  "main": "index.tsx",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "style": "./dist/index.css",
   "directories": {
-    "lib": "lib",
+    "src": "src",
     "test": "__tests__"
   },
   "files": [
-    "lib"
+    "dist"
   ],
   "publishConfig": {
     "access": "public"
@@ -24,16 +26,35 @@
     "url": "git+https://github.com/riteshschaudhari19/indussoft-ui-framework.git"
   },
   "scripts": {
+    "build": "ts-node build.ts",
+    "build:watch": "npm run build -- --watch",
+    "build-ts": "tsc --emitDeclarationOnly",
     "test": "node ./__tests__/@indussoft/indus-idfc-los.test.js"
   },
   "bugs": {
     "url": "https://github.com/riteshschaudhari19/indussoft-ui-framework/issues"
   },
   "dependencies": {
-    "react": "^17.0.2",
+    "@hookform/resolvers": "^4.1.0",
+    "lodash.omit": "^4.5.0",
+    "lodash.pick": "^4.4.0",
+    "react-hook-form": "^7.54.2",
+    "zod": "^3.24.2",
     "zustand": "^4.4.1"
   },
   "devDependencies": {
-    "@types/react": "^19.0.10"
+    "@types/react": "^19.0.10",
+    "esbuild": "^0.17.1",
+    "esbuild-css-modules-plugin": "^2.7.0",
+    "eslint": "^9.20.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "indus": {
+    "name": "LOS-Idfc"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   }
 }
