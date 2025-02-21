@@ -1,0 +1,7 @@
+.build
+.vscode
+dist
+node_modules
+package.json
+package-lock.json
+jest.config.js
