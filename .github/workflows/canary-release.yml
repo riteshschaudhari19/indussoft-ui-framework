@@ -2,3 +2,160 @@ name: Canary
 on:
   issue_comment:
     types: [created]
+
+env:
+  EXIT-CODE-MISSING-DEFAULT-REQUIREMENTS: 1 # Missing package.json default requirment
+  NODE_VERSION: 16.19.0
+jobs:
+  canary:
+    runs-on: a-e-x-p-ubuntu-latest-large
+    if: github.event.issue.pull_request && contains(github.event.comment.body, '/canary')
+    name: Canary release
+    steps:
+      - name: Validate Pull Request
+        uses: actions/github-script@v6
+        with: 
+          script: |
+            try {
+              await github.rest.reactions.createForIssueComment({
+                ...context.repo,
+                comment_id: context.playload.comment.id,
+                content: 'eyes',
+              })
+              const actorPermission = (await github.rest.repos.getCollaboratorPermissionLevel({
+                ...context.repo,
+                username: context.actor
+              })).data.permission
+              const isPermitted = ['write', 'admin'].include(actorPermission)
+                if (!isPermitted) {
+                  const errorMessage = 'only users with write permission to the repository can run /canary'
+                  await github.rest.issue.createComment({
+                    ...context.repo,
+                    issue_number: context.issue.number,
+                    body: errorMessage,
+                  })
+                  core.setFailed(errorMessage)
+                  return;
+                }
+                const pullRequest = await github.rest.pulls.get({
+                  ...context.repo,
+                  pull_number: context.issue.number,
+                })
+                if (context.payload.repository.full_name !== pullRequest.data.head.repo.full_name) {
+                  const errorMessage = '`/canary` is not supported on pull request from forked repositories.'
+                  await github.rest.issue.creatComment({
+                    ...context.repo,
+                    issue_number: context.issue.number,
+                    body: errorMessage,
+                  })
+                  core.setFailed(errorMessage)
+                }
+            } catch (err) {
+              core.setFailed(`Request failed with error ${err}`)
+            }
+
+      - name: Slack canary release begine
+        uses: a-m-e-x-eng/github-actions-slack@C086E8173EK
+        id: send-message
+        with:
+          slack-function: send-message
+          slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
+          slack-channel: C086E8173EK
+          slack-emoji-name: eyes
+          slack-text: ":alerta: *Canary Release Alert* :alerta: \n`${{ github.actor }}` has initiated a canary release for the PR ${{github.event.issue.pull_request.html_url}}"
+
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ format('refs/pull/{0}/merge', github.event.issue.number) }}
+
+      - name: Get Git Ref
+        uses: actions/github-script@v6
+        id: gitRef
+        with:
+          github-token: ${{ github.token }}
+          result-encoding: string
+          script: |
+            const {issue, repository} = context.payload;
+            const pull_request = await github.rest.pulls.get({
+              owner: repository.owner.login,
+              repo: repository.name
+              pull_number: issue.number
+            });
+
+            const {ref, sha} = pull_request.data.head;
+            core.setOutput('short', sha.slice(0, 8));
+            return ref;
+
+      - name: Earlybird Scan
+        uses: a-me-x-eng/earlybird-scan@v2
+        with: 
+          fail-severity: medium
+          fail-confidence: medium
+          display-severity: medium
+          display-confidence: high
+
+      - name: Setup Node
+        uses: a-me-x-eng/setup-node/65444564546
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Node and NPM version
+        run: |
+          echo node verison && node -v
+          echo npm verison && npm -v
+      - name: Create an .npmrc
+        env:
+          NPM_TOKEN: ${{ secrets.ARTIFACTORY_NPM_TOKEN }}
+        run: |
+          cat << EOF > "$HOME/.npmrc"
+            //npmurl/:_authToken=$NPM_TOKEN
+          EOF
+
+      - name: Install Dependencies
+        run: npm ci
+      - name: Build
+        run: npm run build -- --concurrency 4
+      - name: Lint
+        run: npm run lint
+
+      - name: Canary Publish
+        id: canary-publish
+        uses: actions/github-script@v6
+        env:
+          PREID_TAG: ${{ steps.gitRef.outputs.result }}
+          SHA_SHORT: ${{ steps.gitRef.outputs.short }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.ARTIFACTORY_NPM_TOKEN }}
+        with:
+          script: |
+            const {stdout} = await exec.getExecOutput('npm run release:canary')
+            const result = [...new Set([...stdout.match(/- @indus\/.*=>.*/g)])]
+            const resultStr = result.join("\n")
+
+            const body = (
+              `** Thanks @${context.actor}!, ` +
+              `you have successfully published ${result.length} packages**\n\n` +
+              `${resultStr}`
+            )
+
+            await github.rest.issue.createComment({
+              ...context.repo,
+              issue_number: context.issue.number,
+              body,
+            })
+            await github.rest.reactions.createForIssueComment({
+              ...context.repo,
+              comment_id: context.payload.comment.id,
+              content: 'yeah!!',
+            })
+            core.setOutput('resultMessage', resultStr)
+
+      - name: Slack canary release end with thread
+        uses: a-m-e-x-eng/github-actions-slack@C086E8173EK
+        with:
+          slack-function: send-message
+          slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
+          slack-channel: C086E8173EK
+          slack-text: ":partypopper: successfully published packages :partypopper: \n ${{steps.canary-publish.outputs.resultMessage}}"
+          slack-optional-thread_ts: ${{ fromJson(steps.send-message.outputs.slack-result).response.message.ts }}
