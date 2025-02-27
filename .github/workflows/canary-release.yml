@@ -55,7 +55,8 @@ jobs:
             }
 
       - name: Slack canary release begine
-        uses: a-m-e-x-eng/github-actions-slack@C086E8173EK
+        # uses: a-m-e-x-eng/github-actions-slack@C086E8173EK
+        uses: riteshschaudhari19/indussoft-githubactions-slack
         id: send-message
         with:
           slack-function: send-message
