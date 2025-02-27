@@ -153,7 +153,8 @@ jobs:
             core.setOutput('resultMessage', resultStr)
 
       - name: Slack canary release end with thread
-        uses: a-m-e-x-eng/github-actions-slack@C086E8173EK
+        uses: riteshschaudhari19/indussoft-githubactions-slack
+        # uses: a-m-e-x-eng/github-actions-slack@C086E8173EK
         with:
           slack-function: send-message
           slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
