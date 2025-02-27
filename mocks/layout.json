@@ -1,0 +1,51 @@
+{
+    "id": "about-you",
+    "type": "layout",
+    "active": {
+        "lg": "default",
+        "md": "default",
+        "sm": "mobile"
+    },
+    "default": {
+        "order": ["personalDetails", "educationalDetails"],
+        "sections": {
+            "personalDetails": {
+                "title": "Personal Info",
+                "header": "ffdfff",
+                "fields": [
+                    {
+                        "name": "firstName",
+                        "colStyle": "col-sm-12 col-md-12 col-lg-12"
+                    },
+                    {
+                        "name": "lastName",
+                        "colStyle": "col-sm-12 col-md-12 col-lg-12"
+                    },
+                    {
+                        "name": "age",
+                        "colStyle": "col-sm-12 col-md-12 col-lg-12"
+                    }
+                ]
+            },
+            "educationalDetails": {
+                "title": "Edu Info",
+                "header": "ffdfff",
+                "fields": [
+                    {
+                        "name": "firstName",
+                        "colStyle": "col-sm-12 col-md-12 col-lg-12"
+                    },
+                    {
+                        "name": "lastName",
+                        "colStyle": "col-sm-12 col-md-12 col-lg-12"
+                    },
+                    {
+                        "name": "age",
+                        "colStyle": "col-sm-12 col-md-12 col-lg-12"
+                    }
+                ]
+            }
+        }
+
+    }
+}

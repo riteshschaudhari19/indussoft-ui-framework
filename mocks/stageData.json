@@ -1,0 +1,48 @@
+{
+    "id": "about-you",
+    "type": "stage",
+    "content": {
+        "heading": "",
+        "subHeading": "",
+        "description": "",
+        "globalErrorMessage": ""
+    },
+    "submit": {
+        "text": "",
+        "url": ""
+    },
+    "fields": {
+        "firstName": {
+            "$$ref": "firstName",
+            "type": "string",
+            "component": "text",
+            "props": {
+                "id": "firstName",
+                "label": "firstName"
+            },
+            "validation": {
+                "min": "2",
+                "max": "8",
+                "trim": true,
+                "errorMessage": "required",
+                "required": true
+            }
+        },
+        "lastName": {
+            "$$ref": "lastName",
+            "type": "string",
+            "component": "text",
+            "props": {
+                "id": "lastName",
+                "label": "lastName"
+            },
+            "validation": {
+                "min": "2",
+                "max": "8",
+                "trim": true,
+                "errorMessage": "required",
+                "required": true
+            }
+        }
+    }
+}
