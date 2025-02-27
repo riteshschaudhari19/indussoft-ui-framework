@@ -7,6 +7,7 @@ const getSharedIndusDeps = async () => {
         '**/products/**/package.json',
         '**/component-lib/**/package.json',
         '**/ui-engine/**/package.json',
+        '**/form-core/**/package.json',
     ])
     return depFiles.reduce((acc, curr) => {
         console.log('curr=', curr);

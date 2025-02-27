@@ -14,4 +14,8 @@ declare interface IndusConfig {
         email: string
         session: string
     },
+    external: any
+    renderOptions: {
+        ssr: boolean
+    }
 }

@@ -1,0 +1,4 @@
+lerna notice cli v8.2.0
+lerna info versioning independent
+lerna notice filter including "@indussoft/indus-idfc-los"
+lerna info filter [ '@indussoft/indus-idfc-los' ]

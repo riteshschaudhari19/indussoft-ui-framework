@@ -39,6 +39,8 @@ export const runDriver = async () => {
         ...Object.keys(driverPkgJson.dependencies),
         ...Object.keys(productPkg.dependencies),
     ]
+    console.log('ddsdkjd=', ...overallDepsToWatch);
+    console.log('ssdd=', ...sharedIndusDeps);
     overallDepsToWatch.forEach((item)=>{
         if (sharedIndusDeps.includes(item)) {
             dependencies.push(item)
@@ -48,6 +50,7 @@ export const runDriver = async () => {
         return dep.split('/')[1]
     })
     .join(',')
+    console.log('packagesToWatch=', ...packagesToWatch);
     const process2 = execa(
         'concurrently',
         [
