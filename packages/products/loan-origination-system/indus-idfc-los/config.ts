@@ -8,6 +8,7 @@ const config: IndusConfig = {
         email: 'send email api',
         session: 'session api'
     },
+    external: {},
     renderOptions: {
         ssr: true,
     }
