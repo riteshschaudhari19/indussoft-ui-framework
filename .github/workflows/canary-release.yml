@@ -56,7 +56,7 @@ jobs:
 
       - name: Slack canary release begine
         # uses: a-m-e-x-eng/github-actions-slack@C086E8173EK
-        uses: riteshschaudhari19/indussoft-githubactions-slack
+        uses: riteshschaudhari19/indussoft-githubactions-slack@main
         id: send-message
         with:
           slack-function: send-message
@@ -154,7 +154,7 @@ jobs:
             core.setOutput('resultMessage', resultStr)
 
       - name: Slack canary release end with thread
-        uses: riteshschaudhari19/indussoft-githubactions-slack
+        uses: riteshschaudhari19/indussoft-githubactions-slack@main
         # uses: a-m-e-x-eng/github-actions-slack@C086E8173EK
         with:
           slack-function: send-message
