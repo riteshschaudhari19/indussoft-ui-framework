@@ -36,7 +36,7 @@
     "pretest": "if [ ! -z \"$JOB_BASE_NAME\" ]; then npm run build; fi",
     "posttest": "if [ ! -z \"$JOB_BASE_NAME\" ]; then npm run lint; fi",
     "build": "lerna run build",
-    "prebuild": "lerna bootstrap -- --include=dev",
+    "asdfprebuild": "lerna bootstrap -- --include=dev",
     "release:canary": "lerna --registry https://artifactory.aexp.com/api/npm/npm-corporate/ publish --no-private --canary prerelease --yes --preid rc.$(printenv SHA_SHORT) --pre-dist-tag next --force-publish='*' --no-push --no-git-tag-version --yes",
     "clear": "ts-node scripts/clear.ts",
     "clear:build": "npm run clear -- build",

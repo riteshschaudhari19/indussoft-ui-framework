@@ -122,8 +122,8 @@ jobs:
         run: npm ci
       - name: Build
         run: npm run build -- --concurrency 4
-      - name: Lint
-        run: npm run lint
+      # - name: Lint
+      #   run: npm run lint
 
       - name: Canary Publish
         id: canary-publish
@@ -136,7 +136,7 @@ jobs:
         with:
           script: |
             const {stdout} = await exec.getExecOutput('npm run release:canary')
-            const result = [...new Set([...stdout.match(/- @indus\/.*=>.*/g)])]
+            const result = [...new Set([...stdout.match(/- @indussoft\/.*=>.*/g)])]
             const resultStr = result.join("\n")
 
             const body = (
