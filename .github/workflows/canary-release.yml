@@ -23,10 +23,12 @@ jobs:
               #   comment_id: context.playload.comment.id,
               #   content: 'eyes',
               # })
+              console.log("context.actor=>", context.actor)
               const actorPermission = (await github.rest.repos.getCollaboratorPermissionLevel({
                 ...context.repo,
                 username: context.actor
               })).data.permission
+              console.log(actorPermission)
               const isPermitted = ['write', 'admin'].include(actorPermission)
                 if (!isPermitted) {
                   const errorMessage = 'only users with write permission to the repository can run /canary'
@@ -42,6 +44,7 @@ jobs:
                   ...context.repo,
                   pull_number: context.issue.number,
                 })
+                console.log("context.payload.repository.full_name=", context.payload.repository.full_name)
                 if (context.payload.repository.full_name !== pullRequest.data.head.repo.full_name) {
                   const errorMessage = '`/canary` is not supported on pull request from forked repositories.'
                   await github.rest.issue.creatComment({
@@ -63,7 +66,7 @@ jobs:
           slack-function: send-message
           slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
           slack-channel: C086E8173EK
-          slack-emoji-name: eyes
+          # slack-emoji-name: eyes
           slack-text: ":alerta: *Canary Release Alert* :alerta: \n`${{ github.actor }}` has initiated a canary release for the PR ${{github.event.issue.pull_request.html_url}}"
 
       - name: Checkout
@@ -163,4 +166,4 @@ jobs:
           slack-bot-user-oauth-access-token: ${{ secrets.SLACK_BOT_USER_OAUTH_ACCESS_TOKEN }}
           slack-channel: C086E8173EK
           slack-text: ":partypopper: successfully published packages :partypopper: \n ${{steps.canary-publish.outputs.resultMessage}}"
-          slack-optional-thread_ts: ${{ fromJson(steps.send-message.outputs.slack-result).response.message.ts }}
+          # slack-optional-thread_ts: ${{ fromJson(steps.send-message.outputs.slack-result).response.message.ts }}
