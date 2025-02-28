@@ -18,11 +18,11 @@ jobs:
         with: 
           script: |
             try {
-              await github.rest.reactions.createForIssueComment({
-                ...context.repo,
-                comment_id: context.playload.comment.id,
-                content: 'eyes',
-              })
+              # await github.rest.reactions.createForIssueComment({
+              #   ...context.repo,
+              #   comment_id: context.playload.comment.id,
+              #   content: 'eyes',
+              # })
               const actorPermission = (await github.rest.repos.getCollaboratorPermissionLevel({
                 ...context.repo,
                 username: context.actor
@@ -112,7 +112,7 @@ jobs:
           NPM_TOKEN: ${{ secrets.ARTIFACTORY_NPM_TOKEN }}
         run: |
           cat << EOF > "$HOME/.npmrc"
-            //npmurl/:_authToken=$NPM_TOKEN
+            //www.npmjs.com/settings/indussoft/packages/:_authToken=$NPM_TOKEN
           EOF
 
       - name: Install Dependencies
