@@ -13,50 +13,50 @@ jobs:
     if: github.event.issue.pull_request && contains(github.event.comment.body, '/canary')
     name: Canary release
     steps:
-      - name: Validate Pull Request
-        uses: actions/github-script@v6
-        with: 
-          script: |
-            try {
-              # await github.rest.reactions.createForIssueComment({
-              #   ...context.repo,
-              #   comment_id: context.playload.comment.id,
-              #   content: 'eyes',
-              # })
-              console.log("context.actor=>", context.actor)
-              const actorPermission = (await github.rest.repos.getCollaboratorPermissionLevel({
-                ...context.repo,
-                username: context.actor
-              })).data.permission
-              console.log(actorPermission)
-              const isPermitted = ['write', 'admin'].include(actorPermission)
-                if (!isPermitted) {
-                  const errorMessage = 'only users with write permission to the repository can run /canary'
-                  await github.rest.issue.createComment({
-                    ...context.repo,
-                    issue_number: context.issue.number,
-                    body: errorMessage,
-                  })
-                  core.setFailed(errorMessage)
-                  return;
-                }
-                const pullRequest = await github.rest.pulls.get({
-                  ...context.repo,
-                  pull_number: context.issue.number,
-                })
-                console.log("context.payload.repository.full_name=", context.payload.repository.full_name)
-                if (context.payload.repository.full_name !== pullRequest.data.head.repo.full_name) {
-                  const errorMessage = '`/canary` is not supported on pull request from forked repositories.'
-                  await github.rest.issue.creatComment({
-                    ...context.repo,
-                    issue_number: context.issue.number,
-                    body: errorMessage,
-                  })
-                  core.setFailed(errorMessage)
-                }
-            } catch (err) {
-              core.setFailed(`Request failed with error ${err}`)
-            }
+      # - name: Validate Pull Request
+      #   uses: actions/github-script@v6
+      #   with: 
+      #     script: |
+      #       try {
+      #         # await github.rest.reactions.createForIssueComment({
+      #         #   ...context.repo,
+      #         #   comment_id: context.playload.comment.id,
+      #         #   content: 'eyes',
+      #         # })
+      #         console.log("context.actor=>", context.actor)
+      #         const actorPermission = (await github.rest.repos.getCollaboratorPermissionLevel({
+      #           ...context.repo,
+      #           username: context.actor
+      #         })).data.permission
+      #         console.log(actorPermission)
+      #         const isPermitted = ['write', 'admin'].include(actorPermission)
+      #           if (!isPermitted) {
+      #             const errorMessage = 'only users with write permission to the repository can run /canary'
+      #             await github.rest.issue.createComment({
+      #               ...context.repo,
+      #               issue_number: context.issue.number,
+      #               body: errorMessage,
+      #             })
+      #             core.setFailed(errorMessage)
+      #             return;
+      #           }
+      #           const pullRequest = await github.rest.pulls.get({
+      #             ...context.repo,
+      #             pull_number: context.issue.number,
+      #           })
+      #           console.log("context.payload.repository.full_name=", context.payload.repository.full_name)
+      #           if (context.payload.repository.full_name !== pullRequest.data.head.repo.full_name) {
+      #             const errorMessage = '`/canary` is not supported on pull request from forked repositories.'
+      #             await github.rest.issue.creatComment({
+      #               ...context.repo,
+      #               issue_number: context.issue.number,
+      #               body: errorMessage,
+      #             })
+      #             core.setFailed(errorMessage)
+      #           }
+      #       } catch (err) {
+      #         core.setFailed(`Request failed with error ${err}`)
+      #       }
 
       - name: Slack canary release begine
         # uses: a-m-e-x-eng/github-actions-slack@C086E8173EK
