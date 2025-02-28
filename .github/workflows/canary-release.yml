@@ -88,16 +88,17 @@ jobs:
             core.setOutput('short', sha.slice(0, 8));
             return ref;
 
-      - name: Earlybird Scan
-        uses: a-me-x-eng/earlybird-scan@v2
-        with: 
-          fail-severity: medium
-          fail-confidence: medium
-          display-severity: medium
-          display-confidence: high
+      # - name: Earlybird Scan
+      #   uses: a-me-x-eng/earlybird-scan@v2
+      #   with: 
+      #     fail-severity: medium
+      #     fail-confidence: medium
+      #     display-severity: medium
+      #     display-confidence: high
 
       - name: Setup Node
-        uses: a-me-x-eng/setup-node/65444564546
+        # uses: a-me-x-eng/setup-node/65444564546
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
 
