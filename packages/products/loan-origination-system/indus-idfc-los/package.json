@@ -1,6 +1,6 @@
 {
   "name": "@indussoft/indus-idfc-los",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "sddsd",
   "keywords": [
     "sdd"
@@ -35,9 +35,9 @@
     "url": "https://github.com/riteshschaudhari19/indussoft-ui-framework/issues"
   },
   "dependencies": {
-    "@indussoft/ui-engine": "1.0.0",
-    "@indussoft/form-core": "1.0.0",
     "@hookform/resolvers": "^4.1.0",
+    "@indussoft/form-core": "1.0.0",
+    "@indussoft/ui-engine": "^1.0.1",
     "lodash.omit": "^4.5.0",
     "lodash.pick": "^4.4.0",
     "react-hook-form": "^7.54.2",

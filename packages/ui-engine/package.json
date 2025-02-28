@@ -1,6 +1,6 @@
 {
   "name": "@indussoft/ui-engine",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "sdds",
   "keywords": [
     "dsdd"
@@ -39,7 +39,7 @@
     "react-dom": "^19.0.0"
   },
   "dependencies": {
-    "@indussoft/antd-components": "1.0.0",
+    "@indussoft/antd-components": "^1.0.1",
     "@indussoft/form-core": "1.0.0",
     "react-hook-form": "^7.54.2",
     "xss": "^1.0.15"
