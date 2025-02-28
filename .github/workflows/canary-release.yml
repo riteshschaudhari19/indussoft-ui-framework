@@ -8,7 +8,8 @@ env:
   NODE_VERSION: 16.19.0
 jobs:
   canary:
-    runs-on: a-e-x-p-ubuntu-latest-large
+    runs-on: ubuntu-latest
+    # runs-on: a-e-x-p-ubuntu-latest-large
     if: github.event.issue.pull_request && contains(github.event.comment.body, '/canary')
     name: Canary release
     steps:
@@ -154,6 +155,7 @@ jobs:
             core.setOutput('resultMessage', resultStr)
 
       - name: Slack canary release end with thread
+        # uses: riteshschaudhari19/indussoft-githubactions-slack@refs/heads/main
         uses: riteshschaudhari19/indussoft-githubactions-slack@main
         # uses: a-m-e-x-eng/github-actions-slack@C086E8173EK
         with:
