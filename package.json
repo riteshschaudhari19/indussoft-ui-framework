@@ -8,6 +8,7 @@
     ".build/*"
   ],
   "devDependencies": {
+    "@actions/exec": "^1.1.1",
     "@types/figlet": "^1.7.0",
     "@types/gradient-string": "^1.1.6",
     "@types/prompts": "^2.4.9",
@@ -46,7 +47,8 @@
     "lint:ts": "eslint --ext .ts,.tsx packages/ scripts/",
     "pretty": "prettier --write \"{packages,scripts}/**/*.{ts,tsx,md,mdx,json}\" \"**/*.md\"",
     "test": "if [ ! -z \"${GITHUB_TOKEN}\" ]; then echo \"skip test for actions \"; else jest --maxWorkers=5; fi ",
-    "test:ci": "jest --logHeapUsage --maxWorkers=4 --workerIdleMemoryLimit='1GB'"
+    "test:ci": "jest --logHeapUsage --maxWorkers=4 --workerIdleMemoryLimit='1GB'",
+    "mypublish": "ts-node publishScript/index.ts"
   },
   "engines": {
     "node": ">=16.19"
