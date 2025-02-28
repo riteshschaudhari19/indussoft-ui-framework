@@ -63,7 +63,7 @@ import { exec } from '@actions/exec'
 // }
 const publishScript = () => {
   const versionTo = 'patch'
-  const COMMIT_MSG = `[sckip ci] chore(release): bumped ${versionTo} version by Ritesh`
+  const COMMIT_MSG = `[skip ci] chore(release): bumped ${versionTo} version by Ritesh`
   console.log(exec(`lerna --registry https://registry.npmjs.org publish --no-private ${versionTo} --yes --message="${COMMIT_MSG}"`))
 }
 
